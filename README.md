@@ -7,7 +7,7 @@ Requires [Docker](https://docs.docker.com/install/) and [Docker Compose](https:/
 To spin up the servers
 
 ```bash
-docker-compose up
+docker-compose up --build
 ```
 
 To shut down the servers
