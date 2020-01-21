@@ -1,0 +1,13 @@
+version: '3.7'
+
+services:
+  db:
+    container_name: db
+    build:
+      context: ./db
+    volumes:
+      - ./db:/code
+    environment:
+      POSTGRES_PASSWORD: password
+    ports:
+      - 5432:5432
