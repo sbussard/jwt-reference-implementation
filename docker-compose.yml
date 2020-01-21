@@ -5,9 +5,27 @@ services:
     container_name: db
     build:
       context: ./db
-    volumes:
-      - ./db:/code
     environment:
       POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
+
+  api:
+    container_name: api
+    build:
+      context: ./api
+    environment:
+      FRONTEND_URL: http://localhost
+      JWT_SECRET_KEY: A_VERY_SECURE_SECRET_KEY
+      DB_USERNAME: postgres
+      DB_PASSWORD: password
+      DB_HOST: db
+      DB_PORT: 5432
+      DB_DATABASE: postgres
+      DB_SSLMODE: 'false'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./api/src:/api/src
+    depends_on:
+      - db
