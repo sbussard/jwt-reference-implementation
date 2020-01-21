@@ -1,0 +1,38 @@
+<html>
+  <head>
+    <title>JWT example</title>
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <form id="signin">
+      <h1>Sign In</h1>
+      <label>Username</label>
+      <input type="text" name="username" autofocus /><br /><br />
+      <label>Password</label>
+      <input type="text" name="password" /><br /><br />
+      <button>Sign In</button>
+    </form>
+
+    <div id="message"></div>
+
+    <script type="module">
+      import { requestAccessToken } from './request.js';
+
+      const getForm = formElement =>
+        Array.from(formElement.querySelectorAll('[name]'))
+          .map(({ name, value }) => ({ [name]: value }))
+          .reduce((accumulator, item) => Object.assign(accumulator, item), {});
+
+      document.querySelector('#signin').addEventListener('submit', e => {
+        e.preventDefault();
+        requestAccessToken(getForm(e.target)).then(res => {
+          const header = res.split('.')[1];
+          const msg = `Signed In Width Account Id ${
+            JSON.parse(atob(header)).accountId
+          }`;
+          document.querySelector('#message').innerHTML = msg;
+        });
+      });
+    </script>
+  </body>
+</html>

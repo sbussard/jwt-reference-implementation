@@ -9,7 +9,6 @@ services:
       POSTGRES_PASSWORD: password
     ports:
       - 5432:5432
-
   api:
     container_name: api
     build:
@@ -29,3 +28,11 @@ services:
       - ./api/src:/api/src
     depends_on:
       - db
+  app:
+    container_name: app
+    build:
+      context: ./app
+    ports:
+      - 80:80
+    volumes:
+      - ./app/src:/app
